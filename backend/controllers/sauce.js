@@ -20,8 +20,10 @@ exports.displaySauce = (req , res , next) => {
     .catch(error => res.status(400).json({error}));
 }
 
-// exports.callAllThings = (req, res, next) => {
-//     thing.find()
-//     .then(things => res.status(200).json(things))
-//     .catch(error => res.status(400).json({error}));
-// }
+exports.oneSauce = (req , res , next) => {
+    Sauce.findOne({
+        _id : req.params.id
+    })
+    .then( sauces => res.status(201).json(sauces))
+    .catch( error => res.status(401).json({ error }))
+}
