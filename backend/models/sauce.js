@@ -16,5 +16,3 @@ const sauceSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('sauce', sauceSchema);
-// sauce : { type: String, required: true },
-// image : { type: String, required: true },
