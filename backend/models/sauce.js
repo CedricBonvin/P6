@@ -15,4 +15,4 @@ const sauceSchema = mongoose.Schema({
     usersDisliked: [{ type: String, required: false, default: [] }],
 });
 
-module.exports = mongoose.model('sauce', sauceSchema);
+module.exports = mongoose.model('sauces', sauceSchema);  // le sauce crée une nouvelle collection dans la BDD de mongoose 

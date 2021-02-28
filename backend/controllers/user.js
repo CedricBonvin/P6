@@ -3,15 +3,15 @@ const jwt = require('jsonwebtoken');
 const User = require("../models/user");
 
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10)
+    bcrypt.hash(req.body.password, 10)                                  // C'est ok !!
     .then(hash => {
         const user = new User({
         email: req.body.email,
         password: hash
       });
         user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ message : "ben non !!!"}));
+        .then(() => res.status(201).json({ message: 'Utilisateur crée !' }))
+        .catch(error => res.status(400).json({ message : "l'utilisateur n'a pas pu être crée !"}));
     })
     .catch(error => res.status(500).json({ error }));
 };
@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
-          res.status(200).json({
+          res.status(200).json({                                            // Bon alors la c'est encore très flou 
             userId: user._id,
             token: jwt.sign(
               { userId: user._id },
@@ -40,3 +40,4 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
