@@ -75,10 +75,10 @@ exports.like = (req, res, next) => {
 
         if (req.body.like === 1) {
             Sauce.updateOne(
-                { _id: req.params.id },
+                { _id: req.params.id },                                                     // Pourquoi je pas mettre sauce à la place de req.....
                 { $push: { usersLiked: req.body.userId }, $inc: { likes: +1 }, }
             )
-            .then(() => res.status(200).json({ message: 'Vous aimez cette sauce. (^-^) ' }))
+            .then(() => res.status(200).json({ message: "Vous avez aimez cette sauce...!"}))
             .catch((error) => res.status(400).json({ error }))
         }
 
@@ -87,29 +87,29 @@ exports.like = (req, res, next) => {
                 { _id: req.params.id },
                 { $push: { usersDisliked: req.body.userId }, $inc: { dislikes: +1 }, }
             )
-            .then(() => res.status(200).json({ message: 'Vous n\'aimez pas cette sauce. :-( ' }))
+            .then(() => res.status(200).json({ message: "Vous n'avez pas aimez cette sauce...!"}))
             .catch((error) => res.status(400).json({ error }))
         }
 
         if (req.body.like === 0) {
             const indexLike = sauce.usersLiked.indexOf(req.body.userId);
             if (indexLike > -1) {
-                sauce.usersLiked.slice(indexLike, 1);
+                //sauce.usersLiked.slice(indexLike, 1);                                                             // Ca sert à rien !!!!
                 Sauce.updateOne(
                     { _id: req.params.id },
-                    { $push: { usersLiked: { $each: [], $slice: indexLike } }, $inc: { likes: -1 }, }
+                    { $push: { usersLiked: { $each: [], $slice: indexLike } }, $inc: { likes: -1 }, }               // $each   $slice ???????
                 )
-                .then(() => res.status(200).json({ message: ' ' }))
+                .then(() => res.status(200).json({ message: "Vous avez annulez votre j'aime...!" }))
                 .catch((error) => res.status(400).json({ error }))
             }
             else if (indexLike === -1) {
                 const indDisliked = sauce.usersDisliked.indexOf(req.body.userId);
-                sauce.usersDisliked.slice(indDisliked, 1);
+               // sauce.usersDisliked.slice(indDisliked, 1);                                                          // ca sert à rien
                 Sauce.updateOne(
                     { _id: req.params.id },
                     { $push: { usersDisliked: { $each: [], $slice: indDisliked } }, $inc: { dislikes: -1 }, }
                 )
-                .then(() => res.status(200).json({ message: ' ' }))
+                .then(() => res.status(200).json({ message: "Vous avez annuler votre j'aime pas..!" }))
                 .catch((error) => res.status(400).json({ error }))
             }
         }
@@ -117,5 +117,4 @@ exports.like = (req, res, next) => {
 }
 
 ///////////////////// Esaie ///////////////
-
 

@@ -1,12 +1,16 @@
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
 const User = require("../models/user");
+const CryptoJS = require("crypto-js");
+
 
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10)                                  // C'est ok !!
+    const emailCrypt = CryptoJS.HmacSHA256(JSON.stringify(req.body.email), 'secret key 123').toString();
+    bcrypt.hash(req.body.password, 10)  
+    
     .then(hash => {
         const user = new User({
-        email: req.body.email,
+        email:  emailCrypt, 
         password: hash
       });
         user.save()
@@ -17,8 +21,12 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-     User.findOne({ email: req.body.email })
-    .then(user => {
+    const emailCrypt = CryptoJS.HmacSHA256(JSON.stringify(req.body.email), 'secret key 123').toString();
+    // var originalText = decrypts.toString(CryptoJS.enc.Utf8);
+    // const decrypts =CryptoJS.AES.decrypt(bytes, 'secret key 123');
+     User.findOne({email : emailCrypt})  
+     
+     .then(user => {
         if (!user) {
             return res.status(401).json({ error: 'Utilisateur non trouvé !' });
         }
@@ -36,8 +44,8 @@ exports.login = (req, res, next) => {
             )
           });
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => res.status(500).json({ message : "mot de passe incorrect...!" }));
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ message : "utilisateur non trouvé...!"}));
 };
 
