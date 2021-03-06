@@ -1,6 +1,8 @@
    
                                                     /// application de base 
 
+require("dotenv").config()
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -11,7 +13,7 @@ const helmet = require('helmet');
 
 
 
-mongoose.connect('mongodb+srv://utilisateur2:util@cluster0.oq0a7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@cluster0.oq0a7.mongodb.net/${process.env.DB_DBNAME}?retryWrites=true&w=majority`,
 { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));

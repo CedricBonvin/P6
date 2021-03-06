@@ -1,0 +1,17 @@
+
+1.-     Lors de la soutenance, après avoir créer mes variables d'environnement concernant la connexion à mongodb, comment je lui fait parvenir 
+        les infos de connexions ?
+
+2.-     Dans server.js, si je met n'importe quoi comme port sa marche quand même ??  app.set('port', process.env.PORT || process.env.APP_PORT);
+
+3.-     A voir les token => controlleur user + middleware auth 
+
+4.-     quelle chemin on fait : front => server => api <= serveur <= front  ?
+
+
+
+
+
+
+
+
